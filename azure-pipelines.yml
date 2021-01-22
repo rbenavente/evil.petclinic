@@ -10,14 +10,14 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'solalacr1'
-  imageRepository: 'belfius.evil.petclinic'
-  containerRegistry: 'https://solalacr1.azurecr.io'
+ # dockerRegistryServiceConnection: 'solalacr1'
+  imageRepository: 'lybrary/evilpetclinic'
+  containerRegistry: 'https://harbor-master-test.rbenavente.demo.twistlock.com'
   dockerfilePath: 'Dockerfile'
   tag: '$(Build.BuildId)'
   
   # Agent VM image name
-  vmImageName: 'ubuntu-latest'
+  vmImageName: 'evilpetclinic'
 
 stages:
 - stage: Build
