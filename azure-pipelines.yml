@@ -12,7 +12,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'rbenavente-docker'
   imageRepository: 'rbenavente/evilpetclinic'
-  containerRegistry: 'https://harbor-master-test.rbenavente.demo.twistlock.com'
+  containerRegistry: 'https://hub.docker.com/'
   dockerfilePath: 'Dockerfile'
   tag: '$(Build.BuildId)'
   
