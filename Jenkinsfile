@@ -41,7 +41,7 @@ node {
     stage('Push image') {
         //Finally, we'll push the image with two tags. 1st, the incremental build number from Jenkins, then 2nd, the 'latest' tag.
         try {
-            docker.withRegistry('https://harbor-master-test.rbenavente.demo.twistlock.com', 'twistlock_creds') {
+            docker.withRegistry('https://harbor-master-test.rbenavente.demo.twistlock.com', 'harbor_credentials') {
                 app.push("${env.BUILD_NUMBER}")
                 app.push("${env.harbor_version}")
                 app.push("latest")
@@ -49,7 +49,7 @@ node {
         }catch(error) {
             echo "1st push failed, retrying"
             retry(5) {
-                docker.withRegistry('https://harbor-master-test.rbenavente.demo.twistlock.com', 'twistlock_creds') {
+                docker.withRegistry('https://harbor-master-test.rbenavente.demo.twistlock.com', 'harbor_credentials') {
                     app.push("${env.BUILD_NUMBER}")
                     app.push("${env.harbor_version}")
                     app.push("latest")
