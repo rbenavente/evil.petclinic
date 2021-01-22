@@ -7,7 +7,7 @@ node {
 
     stage('Build image') {
         //This builds the actual image; synonymous to docker build on the command line
-        app = docker.build("library/evilpetclinic:${env.harbor_version}_build", "--build-arg owner_email=${env.owner_email} --build-arg harbor_version=${env.harbor_version} .")
+        app = docker.build("library/evilpetclinic:${env.BUILD_NUMBER}_build", "--build-arg mavenPomFile= 'pom.xml'  .")
         echo app.id
     }
 
@@ -32,8 +32,7 @@ node {
         try {
             docker.withRegistry('https://harbor-master-test.rbenavente.demo.twistlock.com', 'harbor_credentials') {
                 app.push("${env.BUILD_NUMBER}")
-                app.push("${env.harbor_version}")
-                app.push("latest")
+
             }
         }catch(error) {
             echo "1st push failed, retrying"
