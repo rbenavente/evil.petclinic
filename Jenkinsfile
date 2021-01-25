@@ -6,22 +6,22 @@ node {
     }
 
     stage('Build Application') { 
-         steps {
+        steps {
              echo '=== Building Petclinic Application ==='
              sh './mvnw package -DskipTests' 
              archiveArtifacts artifacts: 'target/dependency/*.jar'
          }
     }
     stage('Test Application') {
-          steps {
+        steps {
              echo '=== Testing Petclinic Application ==='
               sh 'mvn test'
-            }
-            post {
+        }
+        post {
                 always {
                     junit '**/surefire-reports/TEST-*.xml'
                 }
-            }
+        }
     }  
     stage('Build image') {
         //This builds the actual image; synonymous to docker build on the command line
