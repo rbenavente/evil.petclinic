@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>3.6.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
   <groupId>org.springframework.samples</groupId>
   <artifactId>spring-petclinic</artifactId>
   <version>2.3.0.BUILD-SNAPSHOT</version>
@@ -28,7 +28,7 @@
     <wro4j.version>1.9.0</wro4j.version>
 
     <jacoco.version>0.8.5</jacoco.version>
-    <nohttp-checkstyle.version>0.0.4.RELEASE</nohttp-checkstyle.version>
+    <!--nohttp-checkstyle.version>0.0.4.RELEASE</nohttp-checkstyle.version -->
     <spring-format.version>0.0.25</spring-format.version>
   </properties>
 
@@ -153,7 +153,7 @@
           </dependency>
           <dependency>
             <groupId>io.spring.nohttp</groupId>
-            <artifactId>nohttp-checkstyle</artifactId>
+            <!--artifactId>nohttp-checkstyle</artifactId>
             <version>${nohttp-checkstyle.version}</version>
           </dependency>
         </dependencies>
@@ -177,7 +177,7 @@
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        <artifactId>spring-boot-maven-plugin</artifactId--->
         <executions>
           <execution>
             <!-- Spring Boot Actuator displays build-related information
