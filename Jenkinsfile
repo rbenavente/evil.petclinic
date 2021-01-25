@@ -4,7 +4,24 @@ node {
     stage('Clone repository') {
         checkout scm
     }
-
+   
+     stage('Build Application') { 
+         steps {
+             echo '=== Building Petclinic Application ==='
+             sh 'mvn -B -DskipTests clean package' 
+         }
+      }
+      stage('Test Application') {
+          steps {
+             echo '=== Testing Petclinic Application ==='
+              sh 'mvn test'
+            }
+            post {
+                always {
+                    junit '**/surefire-reports/TEST-*.xml'
+                }
+            }
+        
     stage('Build image') {
         //This builds the actual image; synonymous to docker build on the command line
         app = docker.build("library/evilpetclinic:${env.BUILD_NUMBER}_build", "--build-arg=pom.xml  .")
