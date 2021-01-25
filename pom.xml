@@ -156,7 +156,7 @@
            <artifactId>nohttp-checkstyle</artifactId>
             <version>${nohttp-checkstyle.version}</version> -->
           </dependency>
-        </dependencies>  -->
+        </dependencies>-->
       <!--  <executions>
           <execution>
             <id>nohttp-checkstyle-validation</id>
