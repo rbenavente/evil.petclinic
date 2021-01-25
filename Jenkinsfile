@@ -22,7 +22,7 @@ node {
                 }
             }
          }
-      }
+      
 
         
     stage('Build image') {
