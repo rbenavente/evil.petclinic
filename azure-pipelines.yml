@@ -58,7 +58,7 @@ stages:
         tags: latest
     - task: Prisma Cloud IaC Scan@3
       inputs:
-        Path: '/deploy.yaml'
+        Path: 'deploy.yaml'
         prismaCloudService: 'SESanbox-PrismaCloud'
         High: '1'
         Medium: '1'
