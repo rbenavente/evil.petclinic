@@ -56,3 +56,12 @@ stages:
         dockerfile: $(dockerfilePath)
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: latest
+    - task: Prisma Cloud IaC Scan@3
+      inputs:
+        Path: '/deploy.yaml'
+        prismaCloudService: 'SESanbox-PrismaCloud'
+        High: '1'
+        Medium: '1'
+        Low: '1'
+        Operator: 'or'
+        Tags: 'env: demo'
