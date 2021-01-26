@@ -1,4 +1,10 @@
 # Docker
+- task: prisma-cloud-compute-scan@3
+  inputs:
+    scanType: 'images'
+    twistlockService: 'twistlock-rbenavente'
+    artifact: 'evilpetclinic:latest'
+    project: 'Central Console'
 
 trigger:
 - main
