@@ -1,5 +1,4 @@
 FROM adoptopenjdk:11.0.3_7-jdk-openj9-0.14.0
-
 USER root
 
 #Secret exposed
