@@ -18,7 +18,7 @@ spec:
         app: evilpetclinic
     spec:
       containers:
-      - image: 10.96.172.47:5000/evilpetclinic:latest
+      - image: rbenavente/evilpetclinic:latest
         name: evilpetclinic
         resources: {}
       imagePullSecrets:
