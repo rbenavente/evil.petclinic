@@ -15,9 +15,9 @@ stage('Clone repository') {
     }
 
     stage('Check image Git dependencies has no vulnerabilities') {
-    echo "before scanning¨
+    echo 'before scanning'
                  sh "./twistcli coderepo scan --u $PC_USER --p $PC_PASS --address https://$TL_CONSOLE --details rbenavente/evil.petclinic"
-    echo "after  scanning¨
+    echo 'after  scanning'
        
         }
     
