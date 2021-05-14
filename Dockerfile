@@ -10,6 +10,7 @@ COPY evil /evil
 COPY eicar ~/eicar.txt
 #CMD sed 's/999STANDARD/STANDARD' eicar.txt
 #CMD sed -i 's/999STANDARD/STANDARD' ~/eicar.txt
+RUN curl https://wildfire.paloaltonetworks.com/publicapi/test/elf -o evil-WF
 
 #Install vulnerable os level packages
 #Hashing out as it didn't install it originally....:  CMD apt-get install nmap nc
