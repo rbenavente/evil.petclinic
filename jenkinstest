@@ -17,7 +17,7 @@ stage('Clone repository') {
     echo 'before scanning'
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
                  sh "ls -la"
-                 sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  rbenavente/evil.petclinic --details "
+                 sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  . --details "
                  }
     echo 'after  scanning'
        
