@@ -4,9 +4,8 @@ stage('Clone repository') {
  checkout scm       
 
  }
-
    
- stage('Download latest twistcli') {
+stage('Download latest twistcli') {
             withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
             sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
             sh 'sudo chmod a+x ./twistcli'
@@ -24,7 +23,8 @@ stage('Check image Git dependencies wiht jenkins plugin') {
        prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
         }
     
-    
+ }
+
 stage('Check image Git dependencies with twistcli') {
    echo 'twistcli  scanning'
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
