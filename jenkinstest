@@ -3,25 +3,37 @@ node {
 stage('Clone repository') {
  checkout scm       
 
-    }
+ }
 
    
-    stage('Download latest twistcli') {
+ stage('Download latest twistcli') {
             withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
             sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
             sh 'sudo chmod a+x ./twistcli'
         }
-    }
+ }
 
-    stage('Check image Git dependencies has no vulnerabilities') {
+stage('Check image Git dependencies wiht jenkins plugin') {
+    try {
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
- prismaCloudScanCode excludedPaths: '', explicitFiles: '', logLevel: 'info', pythonVersion: '', repositoryName: 'evil.petclinic', repositoryPath: 'https://github.com/rbenavente/evil.petclinic', resultsFile: 'prisma-cloud-scan-results.json'
-     prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+     prismaCloudScanCode excludedPaths: '', explicitFiles: '', logLevel: 'info', pythonVersion: '', repositoryName: 'evil.petclinic', repositoryPath: 'https://github.com/rbenavente/evil.petclinic', resultsFile: 'prisma-cloud-scan-results.json'
+      }         
+     echo 'after  scanning'
+       
+     } finally {
+       prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+        }
+    
+    
+stage('Check image Git dependencies with twistcli') {
+   echo 'twistcli  scanning'
+     withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
      sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  . --details "
                  }
     echo 'after  scanning'
        
         }
-    
+      
     }
+   
   
