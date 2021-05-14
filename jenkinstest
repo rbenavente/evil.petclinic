@@ -26,7 +26,7 @@ stage('Check image Git dependencies with twistcli') {
     try {
       echo 'before plugin  scanning'
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
-     prismaCloudScanCode excludedPaths: '', explicitFiles: '', logLevel: 'info', pythonVersion: '', repositoryName: 'evil.petclinic', repositoryPath: 'https://github.com/rbenavente/evil.petclinic', resultsFile: 'prisma-cloud-scan-results.json'
+     prismaCloudScanCode excludedPaths: '', explicitFiles: '', logLevel: 'debug', pythonVersion: '', repositoryName: 'evil.petclinic', repositoryPath: 'https://github.com/rbenavente/evil.petclinic', resultsFile: 'prisma-cloud-scan-results.json'
       }         
      echo 'after  scanning'
        
