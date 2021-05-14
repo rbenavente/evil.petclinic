@@ -15,9 +15,10 @@ stage('Clone repository') {
     }
 
     stage('Check image Git dependencies has no vulnerabilities') {
+    echo "before scanning¨
                  sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --details rbenavente/evil.petclinic"
-
-        prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+    echo "after  scanning¨
+       
         }
     
     }
