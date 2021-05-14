@@ -2,6 +2,7 @@ node {
 
 stage('Clone repository') {
  checkout scm       
+
     }
 
 
@@ -17,7 +18,7 @@ stage('Clone repository') {
     stage('Check image Git dependencies has no vulnerabilities') {
     echo 'before scanning'
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
-                 sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --details rbenavente/evil.petclinic"
+                 sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  /rbenavente/evil.petclinic --details "
                  }
     echo 'after  scanning'
        
