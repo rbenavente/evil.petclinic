@@ -14,9 +14,10 @@ stage('Clone repository') {
     }
 
     stage('Check image Git dependencies has no vulnerabilities') {
-    echo 'before scanning'
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
      prismaCloudScanCode excludedPaths: '', explicitFiles: '', logLevel: 'info', pythonVersion: '', repositoryName: 'https://github.com/rbenavente/evil.petclinic', repositoryPath: '.', resultsFile: 'prisma-cloud-scan-results.json'
+     echo 'plugin exit'
+
      prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
      sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  . --details "
                  }
