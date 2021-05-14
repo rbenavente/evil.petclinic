@@ -37,8 +37,9 @@ stage('Check image Git dependencies with twistcli') {
  } 
  stage('Scan image with twistcli and Publish to Jenkins') {
    sh 'docker pull rbenavente/evilpetclinic:latest'  
+   withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
    sh "./twistcli images scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --details rbenavente/evilpetclinic:latest"
-            
+      }      
         }
 
     }
