@@ -8,15 +8,17 @@ stage('Clone repository') {
     //$PC_USER,$PC_PASS,$PC_CONSOLE when Galileo is released. 
     
     stage('Download latest twistcli') {
-        withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'PC_PASS', usernameVariable: 'PC_USER')]) {
-            sh 'curl -k -u $PC_USER:$PC_PASS --output ./twistcli https://$PC_CONSOLE/api/v1/util/twistcli'
+            withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+            sh 'curl -k -u $TL_USER:$TL_PASS --output ./twistcli https://$TL_CONSOLE/api/v1/util/twistcli'
             sh 'sudo chmod a+x ./twistcli'
         }
     }
 
     stage('Check image Git dependencies has no vulnerabilities') {
     echo 'before scanning'
-                 sh "./twistcli coderepo scan --u $PC_USER --p $PC_PASS --address https://$TL_CONSOLE --details rbenavente/evil.petclinic"
+     withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+                 sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --details rbenavente/evil.petclinic"
+                 }
     echo 'after  scanning'
        
         }
