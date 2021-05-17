@@ -39,7 +39,7 @@ stage('Check image Git dependencies with twistcli') {
    sh 'docker pull rbenavente/evilpetclinic:latest'  
    withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
    sh "./twistcli images scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --details rbenavente/evilpetclinic:latest --ci-results-file prisma-cloud-scan-results.json"
-    prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json
+    prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
       }      
         }
 
