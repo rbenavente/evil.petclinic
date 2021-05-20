@@ -15,7 +15,7 @@ stage('Download latest twistcli') {
 
 stage('Check image Git dependencies with twistcli') {
    echo 'twistcli  scanning'
-   echo 'pwd'
+   sh "pwd"
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
      sh "./twistcli coderepo scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE  . --repository evilpetclinic --details "
                  }
