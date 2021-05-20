@@ -35,13 +35,28 @@ stage('Check image Git dependencies with twistcli') {
         }
     
  } 
- stage('Scan image with twistcli and Publish to Jenkins') {
+ stage('Scan image with twistcli') {
    sh 'docker pull rbenavente/evilpetclinic:latest'  
    withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
    sh "./twistcli images scan --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --details rbenavente/evilpetclinic:latest --ci-results-file prisma-cloud-image-scan-results.json"
     prismaCloudPublish resultsFilePattern: 'prisma-cloud-image-scan-results.json'
       }      
         }
+        
+  stage('Scan image with jenkins plugin') {
+      try {
+	    
+	    sh 'docker pull rbenavente/evilpetclinic:latest'  
+            withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+           	prismaCloudScanImage ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', ignoreImageBuildTime: true, image: 'rbenavente/evilpetclinic:latest', key: '', logLevel: 'debug', podmanPath: '', project: '', resultsFile: 'prisma-cloud-scan-results.json'
+		 
+            }
+	 } finally {
+            prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+       
+       }
+
+    }
 
     }
    
