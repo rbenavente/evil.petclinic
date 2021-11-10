@@ -38,7 +38,7 @@ stage('Check image Git dependencies with twistcli') {
   stage('Sandboxing image with twistcli') {
    sh 'docker pull rbenavente/evilpetclinic:latest'  
    withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
-   sh "./twistcli sandbox --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --analysis-duration 2m -v "$PWD":/app/lib --output-file sandbox_out.json rbenavente/evilpetclinic:latest"
+   sh "./twistcli sandbox --u $TL_USER --p $TL_PASS --address https://$TL_CONSOLE --analysis-duration 2m -v "/app/lib" --output-file sandbox_out.json rbenavente/evilpetclinic:latest"
       }      
         }
  
