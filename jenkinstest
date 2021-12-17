@@ -22,7 +22,7 @@ stage('Check image Git dependencies with twistcli') {
        
         }
       
- stage('Check image Git dependencies wiht jenkins plugin') {
+ stage('Check image Git dependencies with jenkins plugin') {
     try {
       echo 'before plugin  scanning'
      withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
