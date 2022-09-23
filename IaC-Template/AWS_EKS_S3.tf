@@ -45,6 +45,16 @@ resource "aws_s3_bucket" "data" {
   }
 }
 
+
+resource "aws_s3_bucket_versioning" "data" {
+  bucket = aws_s3_bucket.data.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+
 resource aws_vpc "eks_vpc" {
   cidr_block           = "10.10.0.0/16"
   enable_dns_hostnames = true
