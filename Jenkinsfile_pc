@@ -1,5 +1,7 @@
 node {
-
+environment {
+    PRISMA_API_URL='https://api.prismacloud.io'
+ }
 stage('Clone repository') {
  checkout scm       
 
