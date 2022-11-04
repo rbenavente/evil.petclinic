@@ -1,0 +1,52 @@
+node {
+
+stage('Clone repository') {
+ checkout scm       
+
+ }
+stage('Scan SCA') {
+  withDockerContainer(image: 'bridgecrew/jenkins_bridgecrew_runner:latest') {              
+                  sh "/run.sh cadc031b-f0a7-5fe1-9085-e0801fc52131 https://github.com/rbenavente/evil.petclinic"
+               
+            
+        }
+	}
+ stage('Build image') {
+ /// This step simulates the image build where the source code plus open source packages are used with Dockerfile to create the image
+          
+          echo 'buidling image  '
+     
+ }
+ 
+ stage('Scan image before Push') {
+      try {
+	    
+	    sh 'docker pull rbenavente/evilpetclinic:latest'  
+            withCredentials([usernamePassword(credentialsId: 'twistlock_creds', passwordVariable: 'TL_PASS', usernameVariable: 'TL_USER')]) {
+           	prismaCloudScanImage ca: '', cert: '', dockerAddress: 'unix:///var/run/docker.sock', ignoreImageBuildTime: true, image: 'rbenavente/evilpetclinic:latest', key: '', logLevel: 'debug', podmanPath: '', project: '', resultsFile: 'prisma-cloud-scan-results.json'
+		 
+            }
+	 } finally {
+            prismaCloudPublish resultsFilePattern: 'prisma-cloud-scan-results.json'
+       
+       }
+
+    }
+ stage('Push image') {
+ /// This step simulates the image Push to the registry 
+          
+          echo 'Pushing image to registry'
+     
+ }
+stage('Scan k8s manifest') {
+  withDockerContainer(image: 'bridgecrew/jenkins_bridgecrew_runner:latest') {              
+                  sh "/run.sh cadc031b-f0a7-5fe1-9085-e0801fc52131 https://github.com/rbenavente/evil.petclinic"
+               
+            
+        } 
+ 
+
+
+    }
+   
+  
