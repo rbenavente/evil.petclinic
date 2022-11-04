@@ -7,14 +7,12 @@ stage('Clone repository') {
 stage('Scan SCA') {
   withDockerContainer(image: 'bridgecrew/jenkins_bridgecrew_runner:latest') {              
                   sh "/run.sh cadc031b-f0a7-5fe1-9085-e0801fc52131 https://github.com/rbenavente/evil.petclinic"
-               
-            
-        }
-	}
+                                }
+}
  stage('Build image') {
  /// This step simulates the image build where the source code plus open source packages are used with Dockerfile to create the image
           
-          echo 'buidling image  '
+          echo 'buidling image '
      
  }
  
@@ -42,7 +40,7 @@ stage('Scan k8s manifest') {
   withDockerContainer(image: 'bridgecrew/jenkins_bridgecrew_runner:latest') {              
                   sh "/run.sh cadc031b-f0a7-5fe1-9085-e0801fc52131 https://github.com/rbenavente/evil.petclinic"
                
-            
+        }   
         } 
  
 
