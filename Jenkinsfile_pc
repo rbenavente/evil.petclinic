@@ -10,7 +10,7 @@ stage('Scan SCA') {
             sh """export PRISMA_API_URL=https://api.prismacloud.io
             pipenv install
             pipenv run pip install bridgecrew
-            pipenv run bridgecrew -f pom.xml --bc-api-key b26df5fc-c2de-4058-8ecc-9cbfd54897c1 --repo-id rbenavente/evil.petclinic"""  }
+            pipenv run bridgecrew  --directory . --bc-api-key cfa3e267-ecf5-46ab-a919-d3c245b0dc7f::WeXhFeXHXINqCibdq7sQLZUftqg= --repo-id rbenavente/evil.petclinic"""  }
   } 
 }
  stage('Build image') {
