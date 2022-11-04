@@ -13,7 +13,7 @@ stage('Scan SCA') {
                               junit skipPublishingChecks: true, testResults: 'results.xml'
                               throw err
                           }
-   
+ }  
 }
  stage('Build image') {
  /// This step simulates the image build where the source code plus open source packages are used with Dockerfile to create the image
