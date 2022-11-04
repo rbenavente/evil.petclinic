@@ -5,7 +5,7 @@ stage('Clone repository') {
 
  }
 stage('Scan SCA') {
-   withDockerContainer(args: '--entrypoint=''', image: 'bridgecrew/checkov:latest') {     
+   withDockerContainer(args: "--entrypoint=''", image: 'bridgecrew/checkov:latest') {     
       try {
               sh 'checkov -f pom.xml --use-enforcement-rules -o cli -o junitxml --output-file-path results.xml --bc-api-key cfa3e267-ecf5-46ab-a919-d3c245b0dc7f::WeXhFeXHXINqCibdq7sQLZUftqg= --repo-id rbenavente/evil.petclinic '
               junit skipPublishingChecks: true, testResults: 'results.xml'
