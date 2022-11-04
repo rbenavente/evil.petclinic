@@ -5,13 +5,15 @@ stage('Clone repository') {
 
  }
 stage('Scan SCA') {
-   withDockerContainer(image: 'kennethreitz/pipenv:latest') {     
-        script { 
-            sh """export PRISMA_API_URL=https://api.prismacloud.io
-            pipenv install
-            pipenv run pip install bridgecrew
-            pipenv run bridgecrew  --directory . --bc-api-key cfa3e267-ecf5-46ab-a919-d3c245b0dc7f::WeXhFeXHXINqCibdq7sQLZUftqg= --repo-id rbenavente/evil.petclinic"""  }
-  } 
+   withDockerContainer(image: 'bridgecrew/checkov:latest') {     
+      try {
+              sh 'checkov -d . --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --bc-api-key cfa3e267-ecf5-46ab-a919-d3c245b0dc7f::WeXhFeXHXINqCibdq7sQLZUftqg= --repo-id rbenavente/evil.petclinic --branch main'
+              junit skipPublishingChecks: true, testResults: 'results.xml'
+              } catch (err) {
+                              junit skipPublishingChecks: true, testResults: 'results.xml'
+                              throw err
+                          }
+   
 }
  stage('Build image') {
  /// This step simulates the image build where the source code plus open source packages are used with Dockerfile to create the image
