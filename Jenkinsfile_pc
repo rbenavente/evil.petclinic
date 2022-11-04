@@ -8,8 +8,8 @@ stage('Scan SCA') {
    script { 
        docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
            try {
-              sh 'checkov -f pom.xml --use-enforcement-rules -o cli -o junitxml --output-file-path results.xml --bc-api-key 8e19f738-7d6a-4243-bd8c-274fabaa901e::W9uQCZuJhLXE86lTcPmu1LEe4Fg= --repo-id rbenavente/evil.petclinic '
-              junit skipPublishingChecks: true, testResults: 'results.xml'
+               sh 'checkov -f pom.xml --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --bc-api-key 8e19f738-7d6a-4243-bd8c-274fabaa901e::W9uQCZuJhLXE86lTcPmu1LEe4Fg= --repo-id rbenavente/evil.petclinic --branch main'
+                              junit skipPublishingChecks: true, testResults: 'results.xml'
               } catch (err) {
                               junit skipPublishingChecks: true, testResults: 'results.xml'
                               throw err
