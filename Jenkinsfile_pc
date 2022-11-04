@@ -47,12 +47,17 @@ stage('Scan SCA') {
      
  }
 stage('Scan k8s manifest') {
-  withDockerContainer(image: 'bridgecrew/jenkins_bridgecrew_runner:latest') {              
-                  sh "/run.sh cadc031b-f0a7-5fe1-9085-e0801fc52131 https://github.com/rbenavente/evil.petclinic"
-               
-        }   
-        } 
- 
+script { 
+       docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
+           try {
+               sh 'checkov -f deploy.yaml --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.petclinic --branch main'
+                              junit skipPublishingChecks: true, testResults: 'results.xml'
+              } catch (err) {
+                              junit skipPublishingChecks: true, testResults: 'results.xml'
+                              throw err
+                          }
+   }  
+ }  
 
 
     }
