@@ -6,7 +6,7 @@ stage('Clone repository') {
  checkout scm       
 
  }
-stage('Scan SCA') {
+stage('Scan SCA from pom file') {
    script { 
        docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
            try {
@@ -26,7 +26,7 @@ stage('Scan SCA') {
      
  }
  
- stage('Scan image before Push') {
+ stage('Scan image before Pushing to Registry') {
       try {
 	    
 	    sh 'docker pull rbenavente/evilpetclinic:latest'  
@@ -40,27 +40,27 @@ stage('Scan SCA') {
        }
 
     }
- stage('Push image') {
+ stage('Push image to the registry') {
  /// This step simulates the image Push to the registry 
           
           echo 'Pushing image to registry'
      
  }
-stage('Scan Dockerfile') {
-script { 
-       docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
-           try {
-               sh 'checkov -f Dockerfile --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.eu.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.Dockerfile --branch main'
-                              junit skipPublishingChecks: true, testResults: 'results.xml'
-              } catch (err) {
-                              junit skipPublishingChecks: true, testResults: 'results.xml'
-                              throw err
-                          }
-   }  
- }  
-
-
-  }
+ /// Optiona stage to check how Dockerfile scanning works
+ 
+ /// stage('Scan Dockerfile') {
+ /// script { 
+ ///       docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
+ ///            try {
+ ///               sh 'checkov -f Dockerfile --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.eu.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.Dockerfile --branch main'
+ ///                              junit skipPublishingChecks: true, testResults: 'results.xml'
+ ///              } catch (err) {
+ ///                              junit skipPublishingChecks: true, testResults: 'results.xml'
+ ///                               throw err
+ ///                           }
+ ///   }  
+ /// }  
+ ///   }
  
 stage('Scan k8s manifest') {
 script { 
