@@ -46,6 +46,22 @@ stage('Scan SCA') {
           echo 'Pushing image to registry'
      
  }
+stage('Scan Dockerfile') {
+script { 
+       docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
+           try {
+               sh 'checkov -f Dockerfile --use-enforcement-rules -o cli -o junitxml --output-file-path console,results.xml --prisma-api-url https://api.prismacloud.io  --bc-api-key ${ACCESS_KEY}::${SECRET_KEY} --repo-id rbenavente/evil.petclinic --branch main'
+                              junit skipPublishingChecks: true, testResults: 'results.xml'
+              } catch (err) {
+                              junit skipPublishingChecks: true, testResults: 'results.xml'
+                              throw err
+                          }
+   }  
+ }  
+
+
+  }
+ 
 stage('Scan k8s manifest') {
 script { 
        docker.image('bridgecrew/checkov:latest').inside("--entrypoint=''")  {     
