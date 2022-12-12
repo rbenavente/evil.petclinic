@@ -77,6 +77,20 @@ script {
 
 
   }
+      stage('Deploy evilpetclinic') {
+        sh 'kubectl create ns evil --dry-run -o yaml | kubectl apply -f -'
+        sh 'kubectl delete --ignore-not-found=true -f files/deploy.yml -n evil'
+        sh 'kubectl apply -f files/deploy.yml -n evil'
+        sh 'sleep 30'
+    }
+    
+   stage('Run bad Runtime attacks') {
+        sh('chmod +x files/runtime_attacks.sh && ./files/runtime_attacks.sh')
+    }
+	
+    stage('Run bad HTTP stuff for WAAS to catch') {
+        sh('chmod +x files/waas_attacks.sh && ./files/waas_attacks.sh')
+    }
  }    
    
   
