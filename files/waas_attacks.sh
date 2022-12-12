@@ -5,7 +5,7 @@ else
    kubectl delete svc evilpetclinic -n evil
 fi
 
-kubectl expose deploy evilpetclinic -n evil
+kubectl expose deploy evilpetclinic -n evil --target-port=8080
 SVC=$(kubectl get svc -n evil|grep evil| awk '{ print $3 }')
 
 echo "testing SQLi attack"
