@@ -34,6 +34,7 @@ resource aws_iam_role_policy_attachment "policy_attachment-AmazonEKSServicePolic
 }
 
 resource "aws_s3_bucket" "data" {
+   
   # bucket is public
   # bucket is not encrypted
   # bucket does not have access logs
